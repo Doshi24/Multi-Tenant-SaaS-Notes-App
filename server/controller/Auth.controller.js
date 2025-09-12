@@ -11,9 +11,9 @@ const register = async (req , res)=>{
     try {
         const {email , Password, tenantId ,role} = req.body
         
-        const existtenant = await Tenant.findOne({slug: tenantId})
-        if(existtenant){
-            return res.status(400).json({status : "unsuccess", message : "Tenant does not exist"+tenant , data : null })
+        const existtenant = await Tenant.findOne({slugvalue : tenantId})
+        if(!existtenant){
+            return res.status(400).json({status : "unsuccess", message : "Tenant does not exist"+tenantId , data : null })
         }
         console.log("existtenant", existtenant);
         
@@ -30,7 +30,7 @@ const register = async (req , res)=>{
         const newuser = await User.create({
             email,
             Password : hashedpass,
-            tenantId,
+            tenantId : existtenant._id,
             role
         })
 

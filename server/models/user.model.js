@@ -13,11 +13,13 @@ const userSchema = new mongoose.Schema(
         },
         role : {
             type : String,
-            enum : ['FREE', 'PRO'],
+            enum : ['ADMIN', 'MEMBER'],
             required : true
         }, 
         tenantId : {
-            type : String,
+            // type : String,
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Tenant",
             required : true
         }
     },
