@@ -57,7 +57,11 @@ const login = async (req, res)=>{
         }
 
         const sendjwt = jwt.sign(
-            {userid : finduser._id }, process.env.JWT_SECRET,{expiresIn : '1h'}
+            {
+                userid : finduser._id,
+                role: finduser.role,
+                tenantId: finduser.tenantId
+             }, process.env.JWT_SECRET,{expiresIn : '1h'}
 
         )
 
