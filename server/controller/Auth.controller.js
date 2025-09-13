@@ -20,7 +20,7 @@ const register = async (req , res)=>{
 
         const existeduser = await User.findOne({email})
         if(existeduser){
-            return res.status(400).json({status : "unsuccess", message : "User already exist with email" +email , data : null })
+            return res.status(400).json({status : "unsuccess", message : `User already exist with email ${existeduser.email}` , data : null })
         }
 
         console.log("passowrd with out hash", Password)
@@ -34,7 +34,7 @@ const register = async (req , res)=>{
             role
         })
 
-        return res.status(201).json({status : "success", message : "User registered successfully with Email " +email , data : newuser })
+        return res.status(201).json({status : "success", message : `User registered successfully with Email ${newuser.email}` , data : newuser })
 
     } catch (error) {
         return res.status(500).json({status : "unsuccess", message : error.message , data : null })

@@ -10,7 +10,7 @@ const create_tenant = async (req, res) => {
             slugvalue,
             plan
         })
-        return res.status(200).json({status : "success", message : "tenant created sucssefully" , data : tenant })
+        return res.status(200).json({status : "success", message :  `tenant created sucssefully with Name : ${tenant.name}` , data : tenant })
 
     } catch (error) {
         return res.status(500).json({status : "unsuccess", message : error.message , data : null })
