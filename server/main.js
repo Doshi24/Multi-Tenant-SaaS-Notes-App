@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import { authRouter } from "./routes/auth.Router.js"
 import { TenantRoute } from "./routes/Tenant.route.js"
+import {NoteRouter} from './routes/Note.route.js'
 
 const main = express();
 
@@ -13,6 +14,7 @@ main.use('/api/auth',authRouter)
 
 main.use('/api/tenant', TenantRoute)
 
+main.use('/api/notes', NoteRouter)
 
 
 export { main }
