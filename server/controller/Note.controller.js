@@ -7,6 +7,14 @@ const createtrnant = async (req, res) => {
         // console.log("req.body", req);
         
 
+        if(req.tenant.plan === "FREE"){
+            const countnote = await Note.countDocuments({tenantId : req.tenant._id})
+            console.log("countnote", countnote)
+            if(countnote >= 3){
+                return res.status(403).json({status : "unsuccess" , message : "Free plan limit reached. Upgrade to PRO for unlimited notes." , data : null})
+            }
+        }
+
         if(!title || !content){
             return res.status(400).json({ status : unsuccess, message : "All fields are required", data : null})
         }
@@ -65,6 +73,14 @@ const updatenote = async(req, res)=>{
         if(note.tenantId.toString() !== req.tenant._id.toString()){
             return res.status(403).json({ status : "unsuccess", message : "Access forbidden: tenant mismatch", data : null})
         }
+        // check role before update//
+        console.log("req", req)
+        console.log("note", note)
+        if (req.user.role === "MEMBER" && note.userid !== req.user.userid) {
+            console.log("inside")
+            return res.status(403).json({ status: "unsuccess", message: "You cannot update Admin note", data: null });
+        }
+
         note.title = title || note.title;
         note.content = content || note.content;
         await note.save();
@@ -81,6 +97,7 @@ const deleteNote = async(req, res)=>{
     try {
         const {id} = req.params
         const note = await Note.findById(id)
+        console.log("note",note)
         if(!note){
             return res.status(404).json({ status : "unsuccess", message : "Note not found", data : null})
         }
@@ -88,7 +105,11 @@ const deleteNote = async(req, res)=>{
         if(note.tenantId.toString() !== req.tenant._id.toString()){
             return res.status(403).json({ status : "unsuccess", message : "Access forbidden: tenant mismatch", data : null})
         }
-        await note.remove();
+        if (req.user.role === "MEMBER" && note.userid !== req.user.userid) {
+            console.log("inside")
+            return res.status(403).json({ status: "unsuccess", message: "You cannot Delete Admin note", data: null });
+        }
+        await note.deleteOne();
         return res.status(200).json({ status : "success", message : "Note deleted successfully", data : null})
     } catch (error) {
         return res.status(500).json({ status : "unsuccess", message : error.message, data : null})
