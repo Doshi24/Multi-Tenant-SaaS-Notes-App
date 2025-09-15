@@ -43,6 +43,7 @@ setformdata({...formdata, [e.target.name]: e.target.value})
             showToast("success", `${data.message} Now Please Login !!!`)
             setformdata({email : "", Password : ""})
             setisAdminSiginup(false);
+            navigate('/create-note')
             }else{
               showToast("error" , data.message)
             }
@@ -60,6 +61,7 @@ setformdata({...formdata, [e.target.name]: e.target.value})
                 if(data.status === "success"){
                 Dispatch(login({user : data.data.user.email, token : data.data.token}))
                 showToast("success", `${data.message}`)
+                navigate('/create-note')
                 }else{
                   showToast("error" , data.message)
                 }

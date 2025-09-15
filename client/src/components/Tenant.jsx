@@ -58,6 +58,13 @@ function Tenant() {
             <p className="text-blue-700 font-medium">
               Note: By default, you will use your Free Model For <strong className="text-xl">Multi-Tenant-Notes-App</strong>
             </p>
+            <p className="text-blue-700 font-medium hover:underline cursor-pointer"
+            onClick={()=>{
+              navigator('/AuthProcess')
+            }}
+            >
+              Tenant Created Already Want to Login 
+            </p>
             <p>
               <span
                 className="text-blue-600 hover:underline cursor-pointer font-semibold"
