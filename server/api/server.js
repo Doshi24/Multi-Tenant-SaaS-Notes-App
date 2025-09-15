@@ -1,5 +1,5 @@
-import { connectdb } from "./utils/dbconfig.js";
-import { main } from "./main.js";
+import { connectdb } from "../utils/dbconfig.js";
+import { main } from "../main.js";
 
 connectdb()
 .then(()=>{
